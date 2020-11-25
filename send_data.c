@@ -81,17 +81,27 @@ int send_data(int sockfd)
 
 int child_proc(int sockfd)
 {
+    /* srand() is not required in this sample send_data().*/
+#if 0
 	struct timeval seed;
 	if (gettimeofday(&seed, NULL) < 0) {
 		perror("gettimeofday for seed");
-		return -1;
+	    return -1;
 	}
 	srand(seed.tv_sec + seed.tv_usec);
+#endif
 
 	/*
      * for example, we can implenent prepare() to sending data here
      * if data generation would take much time.
      */
+
+    if (enable_no_delay) {
+        int on = 1;
+        if (setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on)) < 0) {
+            err(1, "setsockopt TCP_NODELAY fail");
+        }
+    }
 
 	if (send_data(sockfd) < 0) {
 		return -1;

@@ -4,7 +4,8 @@
 int debug   = 0;
 int rate    = DEFAULT_BYTES_RATE;
 int bufsize = DEFAULT_BUFSIZE;
-int no_random_data = 0;
+
+int enable_no_delay = 0;
 
 struct timeval start_time;
 
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
 				rate = get_num(optarg);
 				break;
             case 'N':
-                no_random_data = 1;
+                enable_no_delay = 1;
                 break;
 			case '?':
 			default:
