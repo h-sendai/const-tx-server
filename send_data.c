@@ -39,6 +39,7 @@ int send_data(int sockfd)
 	}
 
 	for ( ; ; ) {
+        static long total_sleep_usec = 0;
 		if (gettimeofday(&current_time, NULL) < 0) {
 			err(1, "gettimeofday in send_data");
 		}
@@ -46,11 +47,12 @@ int send_data(int sockfd)
 		delta_t_sec = ( (double) so_far_bytes / (double) rate)
 					- (double) time_diff.tv_sec - (double) time_diff.tv_usec * 0.000001;
 		if (delta_t_sec > 0.0) {
-			if (debug) {
-				sleep_count ++;
-			}
 			delta_t_usec = (int) (delta_t_sec * 1000000.0);
 			usleep(delta_t_usec);
+			if (debug) {
+				sleep_count ++;
+                total_sleep_usec += delta_t_usec;
+			}
 		}
 		else {
 			if (debug) {
@@ -66,10 +68,16 @@ int send_data(int sockfd)
 		if (n < 0) {
 			if (errno == ECONNRESET) {
 				warnx("connection reset client");
+                if (debug) {
+                    fprintf(stderr, "total_sleep_usec: %ld usec\n", total_sleep_usec);
+                }
 				break;
 			}
 			else if (errno == EPIPE) {
 				warnx("connection closed by client");
+                if (debug) {
+                    fprintf(stderr, "total_sleep_usec: %ld usec\n", total_sleep_usec);
+                }
 				break;
 			}
 			else {
