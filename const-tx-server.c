@@ -31,12 +31,13 @@ void print_priv_port_notice(int port)
   
 int usage()
 {
-    char msg[] = "Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port]\n"
+    char msg[] = "Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port] [-N]\n"
                  "Options:\n"
                  "    -t rate       transfer rate (bytes/s).  use suffix k for kilo, m for mega\n"
                  "    -b bufsize    buffer size (bytes) for one write(). use suffix k for kilo, m for mega\n"
                  "    -i ip_address default is listening all interfaces\n"
                  "    -p port       port number\n"
+                 "    -N            enable TCP_NODELAY\n"
                  "Default values:\n"
                  "    rate    8kB/s (DEFAULT_BYTES_RATE)\n"
                  "    bufsize 1kB   (DEFAULT_BUFSIZE)\n"
