@@ -89,6 +89,8 @@ int main(int argc, char *argv[])
                 break;
 			case '?':
 			default:
+                usage();
+                exit(1);
 				break;
 		}
 	}
