@@ -1,5 +1,5 @@
-#ifndef _DAQMW_EMULATOR_H
-#define _DAQMW_EMULATOR_H 1
+#ifndef _CONST_TX_SERVER_H
+#define _CONST_TX_SERVER_H 1
 
 #include <sys/socket.h>
 #include <sys/time.h>
@@ -36,4 +36,4 @@ extern int enable_no_delay;
 #define LISTENQ            10
 #define SA                 struct sockaddr
 
-#endif /* _DAQMW_EMULATOR_H */
+#endif /* _CONST_TX_SERVER_H */
