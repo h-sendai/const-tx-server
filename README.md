@@ -4,17 +4,19 @@
 
 ```
 % ./const-tx-server -h
-Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port]
+Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port] [-s timerslack] [-N]
 Options:
     -t rate       transfer rate (bytes/s).  use suffix k for kilo, m for mega
     -b bufsize    buffer size (bytes) for one write(). use suffix k for kilo, m for mega
     -i ip_address default is listening all interfaces
     -p port       port number
+    -s timerslack PR_SET_TIMERSLACK value
     -N            enable TCP_NODELAY
 Default values:
-    rate    8 kB/s (DEFAULT_BYTES_RATE)
-    bufsize 1 kB   (DEFAULT_BUFSIZE)
-    port    2222  (DEFAULT_PORT)
+    rate       8 kB/s (DEFAULT_BYTES_RATE)
+    bufsize    1 kB   (DEFAULT_BUFSIZE)
+    port       2222   (DEFAULT_PORT)
+    timerslack (don't specify PR_SET_TIMERSLACK)
 ```
 
 アルゴリズムは単純で

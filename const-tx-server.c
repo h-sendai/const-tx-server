@@ -6,6 +6,7 @@ int rate    = DEFAULT_BYTES_RATE;
 int bufsize = DEFAULT_BUFSIZE;
 
 int enable_no_delay = 0;
+int timer_slack     = 0; 
 
 struct timeval start_time;
 
@@ -31,17 +32,19 @@ void print_priv_port_notice(int port)
   
 int usage()
 {
-    char msg[] = "Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port] [-N]\n"
+    char msg[] = "Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port] [-s timerslack] [-N]\n"
                  "Options:\n"
                  "    -t rate       transfer rate (bytes/s).  use suffix k for kilo, m for mega\n"
                  "    -b bufsize    buffer size (bytes) for one write(). use suffix k for kilo, m for mega\n"
                  "    -i ip_address default is listening all interfaces\n"
                  "    -p port       port number\n"
+                 "    -s timerslack PR_SET_TIMERSLACK value\n"
                  "    -N            enable TCP_NODELAY\n"
                  "Default values:\n"
-                 "    rate    8 kB/s (DEFAULT_BYTES_RATE)\n"
-                 "    bufsize 1 kB   (DEFAULT_BUFSIZE)\n"
-                 "    port    2222  (DEFAULT_PORT)\n";
+                 "    rate       8 kB/s (DEFAULT_BYTES_RATE)\n"
+                 "    bufsize    1 kB   (DEFAULT_BUFSIZE)\n"
+                 "    port       2222   (DEFAULT_PORT)\n"
+                 "    timerslack (don't specify PR_SET_TIMERSLACK)\n";
 
     fprintf(stderr, "%s\n", msg);
 
@@ -62,7 +65,7 @@ int main(int argc, char *argv[])
 
 	port    = DEFAULT_PORT;
 	bufsize = DEFAULT_BUFSIZE;
-	while( (ch = getopt(argc, argv, "b:dhi:p:t:N")) != -1) {
+	while( (ch = getopt(argc, argv, "b:dhi:p:s:t:N")) != -1) {
 		switch(ch) {
 			case 'b':
 				bufsize = get_num(optarg);
@@ -81,6 +84,9 @@ int main(int argc, char *argv[])
 			case 'p':
 				port = strtol(optarg, NULL, 0);
 				break;
+            case 's':
+                timer_slack = strtol(optarg, NULL, 0);
+                break;
 			case 't':
 				rate = get_num(optarg);
 				break;

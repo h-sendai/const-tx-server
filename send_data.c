@@ -1,3 +1,4 @@
+#include <sys/prctl.h> /* for PR_SET_TIMERSLACK 1 (1 usec delay (1 usec is minimum usleep() delay)) */
 #include "const-tx-server.h"
 
 long long so_far_bytes = 0;
@@ -17,6 +18,17 @@ int send_data(int sockfd)
 		fprintf(stderr, "send_data() start\n");
 		fprintf(stderr, "bufsize: %d\n", bufsize);
 	}
+
+
+    if (timer_slack > 0) {
+        if (debug) {
+            fprintf(stderr, "timer_slack: %d\n", timer_slack);
+        }
+        if (prctl(PR_SET_TIMERSLACK, 1) < 0) {
+            err(1, "prctl");
+        }
+    }
+
 	if ( (buf = malloc(bufsize)) == NULL) {
 		err(1, "malloc");
 	}
