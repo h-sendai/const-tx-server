@@ -3,6 +3,7 @@
 定数レートでデータを送ろうとするサーバー。
 
 ```
+% ./const-tx-server -h
 Usage: const-tx-server [-t rate] [-b buffer_size] [-i listen_ip_address] [-p port]
 Options:
     -t rate       transfer rate (bytes/s).  use suffix k for kilo, m for mega
@@ -10,11 +11,10 @@ Options:
     -i ip_address default is listening all interfaces
     -p port       port number
 Default values:
-    rate    8kB/s (defined as DEFAULT_BYTES_RATE)
-    bufsize 1kB (defined as DEFAULT_BUFSIZE)
-    port    2222 (defined as DEFAULT_PORT)
+    rate    8kB/s (DEFAULT_BYTES_RATE)
+    bufsize 1kB   (DEFAULT_BUFSIZE)
+    port    2222  (DEFAULT_PORT)
 ```
-
 
 アルゴリズムは単純で
 

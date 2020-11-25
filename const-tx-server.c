@@ -37,9 +37,9 @@ int usage()
                  "    -i ip_address default is listening all interfaces\n"
                  "    -p port       port number\n"
                  "Default values:\n"
-                 "    rate    8kB/s (defined as DEFAULT_BYTES_RATE)\n"
-                 "    bufsize 1kB (defined as DEFAULT_BUFSIZE)\n"
-                 "    port    2222 (defined as DEFAULT_PORT)\n";
+                 "    rate    8kB/s (DEFAULT_BYTES_RATE)\n"
+                 "    bufsize 1kB   (DEFAULT_BUFSIZE)\n"
+                 "    port    2222  (DEFAULT_PORT)\n";
 
     fprintf(stderr, "%s\n", msg);
 
