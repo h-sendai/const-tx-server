@@ -2,7 +2,7 @@
 
 /*-
  * Copyright (c) 1991, 1993, 1994
- *	The Regents of the University of California.  All rights reserved.
+ *  The Regents of the University of California.  All rights reserved.
  *
  * This code is derived from software contributed to Berkeley by
  * Keith Muller of the University of California, San Diego and Lance
@@ -35,85 +35,85 @@
 
 /*
  * Convert an expression of the following forms to a uintmax_t.
- * 	1) A positive decimal number.
- *	2) A positive decimal number followed by a 'b' or 'B' (mult by 512).
- *	3) A positive decimal number followed by a 'k' or 'K' (mult by 1 << 10).
- *	4) A positive decimal number followed by a 'm' or 'M' (mult by 1 << 20).
- *	5) A positive decimal number followed by a 'g' or 'G' (mult by 1 << 30).
- *	5) A positive decimal number followed by a 'w' or 'W' (mult by sizeof int).
- *	6) Two or more positive decimal numbers (with/without [BbKkMmGgWw])
- *	   separated by 'x' or 'X' (also '*' for backwards compatibility),
- *	   specifying the product of the indicated values.
+ *  1) A positive decimal number.
+ *  2) A positive decimal number followed by a 'b' or 'B' (mult by 512).
+ *  3) A positive decimal number followed by a 'k' or 'K' (mult by 1 << 10).
+ *  4) A positive decimal number followed by a 'm' or 'M' (mult by 1 << 20).
+ *  5) A positive decimal number followed by a 'g' or 'G' (mult by 1 << 30).
+ *  5) A positive decimal number followed by a 'w' or 'W' (mult by sizeof int).
+ *  6) Two or more positive decimal numbers (with/without [BbKkMmGgWw])
+ *     separated by 'x' or 'X' (also '*' for backwards compatibility),
+ *     specifying the product of the indicated values.
  */
 
 /* static uintmax_t */
 uintmax_t get_num(const char *val)
 {
-	uintmax_t num, mult, prevnum;
-	char *expr;
+    uintmax_t num, mult, prevnum;
+    char *expr;
 
-	errno = 0;
-	num = strtouq(val, &expr, 0);
-	if (errno != 0)				/* Overflow or underflow. */
-		err(1, "overflow or underflow");
-		//err(1, "%s", oper);
-	
-	if (expr == val)			/* No valid digits. */
-		errx(1, "illegal numeric value");
-		//errx(1, "%s: illegal numeric value", oper);
+    errno = 0;
+    num = strtouq(val, &expr, 0);
+    if (errno != 0)             /* Overflow or underflow. */
+        err(1, "overflow or underflow");
+        //err(1, "%s", oper);
+    
+    if (expr == val)            /* No valid digits. */
+        errx(1, "illegal numeric value");
+        //errx(1, "%s: illegal numeric value", oper);
 
-	mult = 0;
-	switch (*expr) {
-	case 'B':
-	case 'b':
-		mult = 512;
-		break;
-	case 'K':
-	case 'k':
-		mult = 1 << 10;
-		break;
-	case 'M':
-	case 'm':
-		mult = 1 << 20;
-		break;
-	case 'G':
-	case 'g':
-		mult = 1 << 30;
-		break;
-	case 'W':
-	case 'w':
-		mult = sizeof(int);
-		break;
-	default:
-		;
-	}
+    mult = 0;
+    switch (*expr) {
+    case 'B':
+    case 'b':
+        mult = 512;
+        break;
+    case 'K':
+    case 'k':
+        mult = 1 << 10;
+        break;
+    case 'M':
+    case 'm':
+        mult = 1 << 20;
+        break;
+    case 'G':
+    case 'g':
+        mult = 1 << 30;
+        break;
+    case 'W':
+    case 'w':
+        mult = sizeof(int);
+        break;
+    default:
+        ;
+    }
 
-	if (mult != 0) {
-		prevnum = num;
-		num *= mult;
-		/* Check for overflow. */
-		if (num / mult != prevnum)
-			goto erange;
-		expr++;
-	}
+    if (mult != 0) {
+        prevnum = num;
+        num *= mult;
+        /* Check for overflow. */
+        if (num / mult != prevnum)
+            goto erange;
+        expr++;
+    }
 
-	switch (*expr) {
-		case '\0':
-			break;
-		case '*':			/* Backward compatible. */
-		case 'X':
-		case 'x':
-			mult = get_num(expr + 1);
-			prevnum = num;
-			num *= mult;
-			if (num / mult == prevnum)
-				break;
+    switch (*expr) {
+        case '\0':
+            break;
+        case '*':           /* Backward compatible. */
+        case 'X':
+        case 'x':
+            mult = get_num(expr + 1);
+            prevnum = num;
+            num *= mult;
+            if (num / mult == prevnum)
+                break;
 erange:
-			errx(1, "%s", strerror(ERANGE));
-			//errx(1, "%s: %s", oper, strerror(ERANGE));
-		default:
-			errx(1, "illegal numeric value");
-			//errx(1, "%s: illegal numeric value", oper);
-	}
-	return (num);
+            errx(1, "%s", strerror(ERANGE));
+            //errx(1, "%s: %s", oper, strerror(ERANGE));
+        default:
+            errx(1, "illegal numeric value");
+            //errx(1, "%s: illegal numeric value", oper);
+    }
+    return (num);
 }
