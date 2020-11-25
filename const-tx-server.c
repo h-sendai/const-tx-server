@@ -39,8 +39,8 @@ int usage()
                  "    -p port       port number\n"
                  "    -N            enable TCP_NODELAY\n"
                  "Default values:\n"
-                 "    rate    8kB/s (DEFAULT_BYTES_RATE)\n"
-                 "    bufsize 1kB   (DEFAULT_BUFSIZE)\n"
+                 "    rate    8 kB/s (DEFAULT_BYTES_RATE)\n"
+                 "    bufsize 1 kB   (DEFAULT_BUFSIZE)\n"
                  "    port    2222  (DEFAULT_PORT)\n";
 
     fprintf(stderr, "%s\n", msg);

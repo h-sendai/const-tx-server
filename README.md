@@ -10,9 +10,10 @@ Options:
     -b bufsize    buffer size (bytes) for one write(). use suffix k for kilo, m for mega
     -i ip_address default is listening all interfaces
     -p port       port number
+    -N            enable TCP_NODELAY
 Default values:
-    rate    8kB/s (DEFAULT_BYTES_RATE)
-    bufsize 1kB   (DEFAULT_BUFSIZE)
+    rate    8 kB/s (DEFAULT_BYTES_RATE)
+    bufsize 1 kB   (DEFAULT_BUFSIZE)
     port    2222  (DEFAULT_PORT)
 ```
 
